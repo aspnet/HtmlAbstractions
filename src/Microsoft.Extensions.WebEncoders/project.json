@@ -26,6 +26,12 @@
         "System.Runtime": { "type": "build" }
       }
     },
+    "dnx451": {
+      "frameworkAssemblies": {
+        "System.IO": "",
+        "System.Runtime": ""
+      }
+    },
     "netstandard1.3": {
       "imports": [
         "dotnet5.4"

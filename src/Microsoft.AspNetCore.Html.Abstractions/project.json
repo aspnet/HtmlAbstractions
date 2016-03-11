@@ -23,6 +23,12 @@
         "System.Runtime": { "type": "build" }
       }
     },
+    "dnx451": {
+      "frameworkAssemblies": {
+        "System.IO": "",
+        "System.Runtime": ""
+      }
+    },
     "netstandard1.3": {
       "dependencies": {
         "System.Collections": "4.0.11-*",

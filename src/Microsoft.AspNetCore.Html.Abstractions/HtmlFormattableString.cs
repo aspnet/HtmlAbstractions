@@ -28,7 +28,7 @@ namespace Microsoft.AspNetCore.Html
         /// <param name="format">A composite format string.</param>
         /// <param name="args">An array that contains objects to format.</param>
         public HtmlFormattableString(string format, params object[] args)
-                : this(null, format, args)
+            : this(formatProvider: null, format: format, args: args)
         {
         }
 
@@ -94,6 +94,8 @@ namespace Microsoft.AspNetCore.Html
             private readonly HtmlEncoder _encoder;
             private readonly IFormatProvider _formatProvider;
 
+            private StringWriter _writer;
+
             public EncodingFormatProvider(IFormatProvider formatProvider, HtmlEncoder encoder)
             {
                 Debug.Assert(formatProvider != null);
@@ -116,11 +118,14 @@ namespace Microsoft.AspNetCore.Html
                 var htmlContent = arg as IHtmlContent;
                 if (htmlContent != null)
                 {
-                    using (var writer = new StringWriter())
-                    {
-                        htmlContent.WriteTo(writer, _encoder);
-                        return writer.ToString();
-                    }
+                    _writer = _writer ?? new StringWriter();
+
+                    htmlContent.WriteTo(_writer, _encoder);
+
+                    var result = _writer.ToString();
+                    _writer.GetStringBuilder().Clear();
+
+                    return result;
                 }
 
                 // If we get here then 'arg' is not an IHtmlContent, and we want to handle it the way a normal

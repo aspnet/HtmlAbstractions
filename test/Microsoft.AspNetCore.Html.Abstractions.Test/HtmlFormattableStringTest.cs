@@ -67,6 +67,52 @@ namespace Microsoft.AspNetCore.Html
         }
 
         [Fact]
+        public void HtmlFormattableString_WithOtherIHtmlContent()
+        {
+            // Arrange
+            var builder = new HtmlContentBuilder();
+            builder.Append("First");
+
+            var formattableString = new HtmlFormattableString("{0}!", builder);
+
+            // Act
+            var result = HtmlContentToString(formattableString);
+
+            // Assert
+            Assert.Equal("HtmlEncode[[First]]!", result);
+        }
+
+        // This test is needed to ensure the shared StringWriter gets cleared.
+        [Fact]
+        public void HtmlFormattableString_WithMultipleHtmlContentArguments()
+        {
+            // Arrange
+            var formattableString = new HtmlFormattableString(
+                "Happy {0}, {1}!",
+                new HtmlEncodedString("Birthday"),
+                new HtmlContentBuilder().Append("Billy"));
+
+            // Act
+            var result = HtmlContentToString(formattableString);
+
+            // Assert
+            Assert.Equal("Happy Birthday, HtmlEncode[[Billy]]!", result);
+        }
+
+        [Fact]
+        public void HtmlFormattableString_WithHtmlEncodedString_AndOffset()
+        {
+            // Arrange
+            var formattableString = new HtmlFormattableString("{0, 20}!", new HtmlEncodedString("First"));
+
+            // Act
+            var result = HtmlContentToString(formattableString);
+
+            // Assert
+            Assert.Equal("               First!", result);
+        }
+
+        [Fact]
         public void HtmlFormattableString_With3Arguments()
         {
             // Arrange

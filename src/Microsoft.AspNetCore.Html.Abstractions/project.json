@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-*",
+  "version": "1.0.0",
   "description": "ASP.NET Core HTML abstractions used for building HTML content.\r\nCommonly used types:\r\nMicrosoft.AspNetCore.Html.HtmlString\r\nMicrosoft.AspNetCore.Html.IHtmlContent",
   "packOptions": {
     "repository": {
@@ -19,13 +19,13 @@
     "xmlDoc": true
   },
   "dependencies": {
-    "System.Text.Encodings.Web": "4.0.0-*"
+    "System.Text.Encodings.Web": "4.0.0"
   },
   "frameworks": {
     "netstandard1.0": {
       "dependencies": {
-        "System.Collections": "4.0.11-*",
-        "System.Resources.ResourceManager": "4.0.1-*"
+        "System.Collections": "4.0.11",
+        "System.Resources.ResourceManager": "4.0.1"
       }
     }
   }
